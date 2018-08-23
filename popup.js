@@ -142,11 +142,14 @@ function answerSelection(link) {
 
     buttonData = link.innerHTML;
     if (buttonData === data.correct_answer) {
-        link.style.background = '#008000';
+        //link.style.background = '#008000';
+        link.className = 'btn btn-success btn-space';
     }
     else {
-        link.style.background = '#FF0000';
-        ans.style.background = '#008000';
+        //link.style.background = '#FF0000';
+        //ans.style.background = '#008000';
+        link.className = 'btn btn-danger btn-space';
+        ans.className ='btn btn-success btn-space';
     }
 
     document.getElementById("newQ").style.visibility = "visible";
@@ -217,7 +220,8 @@ function hiddenButton(link5)
     var i;
     for (i = 0; i < 4; i++) {
         input = buttons[i];        
-        document.getElementById(input).style.background = ' #F5F5F5 ';
+        //document.getElementById(input).style.background = ' #138496 ';
+        document.getElementById(input).className = 'btn btn-info btn-space';
     }
 
     document.getElementById("newQ").style.visibility = "hidden";
