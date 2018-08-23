@@ -9,7 +9,7 @@ function buildUrl()
     return getBaseUrl() + 'api.php?amount=10&type=multiple';
 }
 
-function getOneQuestion()
+export function getOneQuestion()
 {
     //make call to API
     var apiUrl = getBaseUrl() + 'api.php?amount=1&type=multiple';

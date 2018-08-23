@@ -1,23 +1,86 @@
+var currentQuestion = getOneQuestion();
 
 onload();
 
+function getBaseUrl()
+{
+    return "https://opentdb.com/";
+}
+
+function buildUrl()
+{
+    return getBaseUrl() + 'api.php?amount=10&type=multiple';
+}
+
+function getOneQuestion()
+{
+    //make call to API
+    var apiUrl = getBaseUrl() + 'api.php?amount=1&type=multiple';
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', apiUrl, false);
+
+    request.send(null);
+
+    var data = JSON.parse(request.responseText);
+
+    if (request.status >= 200 && request.status < 400)
+    {
+
+        var question = data.results[0];
+        return question;
+        
+    }
+    else
+    {
+        console.log('error');
+    }
+
+    return null;
+
+    // request.onload = function()
+    // {
+    //     var data = JSON.parse(this.response);
+
+    //     if (request.status >= 200 && request.status < 400)
+    //     {
+
+    //         var question = data[results][0];
+    //         callback(question);
+    //     }
+    //     else
+    //     {
+    //         console.log('error');
+    //     }
+    // }
+
+    // request.send();
+}
+
+function newQuestion()
+{
+    currentQuestion = getOneQuestion();
+}
 function getData() {
-    data = {
+    // data = {
 
-        "category": "Animals",
-        "type": "multiple",
-        "difficulty": "easy",
-        "question": "The Kākāpō is a large, flightless, nocturnal parrot native to which country?",
-        "correct_answer": "New Zealand",
-        "incorrect_answers": [
-            "South Africa",
-            "Australia",
-            "Madagascar"
-        ]
+    //     "category": "Animals",
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "question": "The Kākāpō is a large, flightless, nocturnal parrot native to which country?",
+    //     "correct_answer": "New Zealand",
+    //     "incorrect_answers": [
+    //         "South Africa",
+    //         "Australia",
+    //         "Madagascar"
+    //     ]
 
-    };
+    // };
 
-    return data;
+
+
+    return currentQuestion;
 }
 
 function onload() {
@@ -75,7 +138,7 @@ function enableButtons() {
 
 function answerSelection(link) {
     data = getData();
-    ans = checkAnswer();
+    ans = checkAnswer(data);
 
     buttonData = link.innerHTML;
     if (buttonData === data.correct_answer) {
@@ -119,7 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 //function to check right one and wrong one, loop through and color 
-function checkAnswer() {
+function checkAnswer(data) {
+
     var buttonData = [];
     buttonData[0] = document.getElementById('answer1');
     buttonData[1] = document.getElementById('p2');
@@ -129,17 +193,20 @@ function checkAnswer() {
     var buttons = ['answer1', 'p2', 'p3', 'p4'];
     var i;
     var ans;
-    var input;
+    var input = "";
 
+    console.log(buttons);
     for (i = 0; i < buttonData.length; i++) {
         if (buttonData[i].innerHTML === data.correct_answer) {
-            console.log(data.correct_answer);
-            console.log(buttonData[i]);
+            // console.log(data);
+            // console.log(data.correct_answer);
             input = buttons[i];
         }
     }
-
+    // console.log('answer below!!');
+    // console.log(input);
     ans = document.getElementById(input);
+    console.log(ans);
     return ans;
 
 }
@@ -147,15 +214,15 @@ function checkAnswer() {
 function hiddenButton(link5)
 {
     var buttons = ['answer1', 'p2', 'p3', 'p4'];
-
-    data = getData();
     var i;
     for (i = 0; i < 4; i++) {
         input = buttons[i];        
         document.getElementById(input).style.background = ' #F5F5F5 ';
     }
 
-    writeData(data);
     document.getElementById("newQ").style.visibility = "hidden";
     enableButtons();
+    newQuestion();
+    data = getData();
+    writeData(data);
 }
