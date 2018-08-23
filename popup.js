@@ -1,17 +1,6 @@
-// // Copyright 2018 The Chromium Authors. All rights reserved.
-// // Use of this source code is governed by a BSD-style license that can be
-// // found in the LICENSE file.
-
-// 'use strict';
-
-//get data
-
-// troubles: cant do inline js scripts so had to use listeners and onload function!! 
-
-//add event listener for each button on click 
-
 
 onload();
+
 function getData() {
     data = {
 
@@ -31,246 +20,143 @@ function getData() {
     return data;
 }
 
-function onload() 
-{
+function onload() {
     data = getData();
-
-        //randomize choices!! TODO 
-        document.getElementById("h1").innerHTML = data.question;
-        document.getElementById("answer1").innerHTML = data.correct_answer;
-        document.getElementById("p2").innerHTML = data.incorrect_answers[0];
-        document.getElementById("p3").innerHTML = data.incorrect_answers[1];
-        document.getElementById("p4").innerHTML = data.incorrect_answers[2];
+    writeData(data);
 }
-// document.addEventListener('DOMContentLoaded', function () {
-//     var link = document.getElementById('loadData');
 
-//     link.addEventListener('load', function () {
-//         data = getData();
+function writeData(data) {
+    document.getElementById("h1").innerHTML = data.question;
 
+    array = [];
+    var i;
 
-//         //randomize choices!! TODO 
-//         document.getElementById("h1").innerHTML = data.question;
-//         document.getElementById("answer1").innerHTML = data.correct_answer;
-//         document.getElementById("p2").innerHTML = data.incorrect_answers[0];
-//         document.getElementById("p3").innerHTML = data.incorrect_answers[1];
-//         document.getElementById("p4").innerHTML = data.incorrect_answers[2];
-//     });
-// });
+    array.push(data.correct_answer);
+    array.push(data.incorrect_answers[0]);
+    array.push(data.incorrect_answers[1]);
+    array.push(data.incorrect_answers[2]);
 
+    i = getRandom(array.length);
+    document.getElementById("answer1").innerHTML = array[i];
+    array.splice(i, 1);
 
-// document.addEventListener('DOMContentLoaded', function() {
+    i = getRandom(array.length);
+    document.getElementById("p2").innerHTML = array[i];
+    array.splice(i, 1);
 
-//     var link = document.getElementById('DOMContentLoaded', function() {
-//         var link =    document.getElementById("newQ");
+    i = getRandom(array.length);
+    document.getElementById("p3").innerHTML = array[i];
+    array.splice(i, 1);
 
-//         link.addEventListener('click', function() {
-//             link.style.visibility = "hidden";
+    i = getRandom(array.length);
+    document.getElementById("p4").innerHTML = array[i];
+    array.splice(i, 1);
+}
 
-//         })
-//     });
-// });
-//first button
+function getRandom(x) {
+    return Math.floor(Math.random() * x);
+}
 
-function disableButtons()
-{
+function disableButtons() {
     var buttons = ['answer1', 'p2', 'p3', 'p4'];
-    for(i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         input = buttons[i];
-        console.log(input);
         document.getElementById(input).disabled = true;
     }
 }
 
-function enableButtons()
-{
+function enableButtons() {
     var buttons = ['answer1', 'p2', 'p3', 'p4'];
-    for(i = 0; i < 4; i++)
-    {
+    for (i = 0; i < 4; i++) {
         input = buttons[i];
-        console.log(input);
         document.getElementById(input).disabled = false;
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+function answerSelection(link) {
+    data = getData();
+    ans = checkAnswer();
+
+    buttonData = link.innerHTML;
+    if (buttonData === data.correct_answer) {
+        link.style.background = '#008000';
+    }
+    else {
+        link.style.background = '#FF0000';
+        ans.style.background = '#008000';
+    }
+
+    document.getElementById("newQ").style.visibility = "visible";
+    disableButtons();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     var link = document.getElementById('answer1');
+    link.addEventListener('click', function () {
+        answerSelection(link);
+    });
 
-    link.addEventListener('click', function() {
+    var link2 = document.getElementById('p2');
+    link2.addEventListener('click', function () {
+        answerSelection(link2);
+    });
 
-        data = getData();
+    var link3 = document.getElementById('p3');
+    link3.addEventListener('click', function () {
+        answerSelection(link3)
+    });
 
-        // array = checkAnswer();
-       
-        ans = checkAnswer();
+    var link4 = document.getElementById('p4');
+    link4.addEventListener('click', function () {
+        answerSelection(link4)
+    });
 
-        buttonData = link.innerHTML;
-        if(buttonData === data.correct_answer)
-        {
-            link.style.background='#008000';
-        }
-        else
-        {
-            link.style.background='#FF0000';
-            ans.style.background = '#008000';
-        }
-        
-        document.getElementById("newQ").style.visibility = "visible";
-        disableButtons();
-
-    })
+    var link5 = document.getElementById('newQ');
+    link5.addEventListener('click', function () {
+        hiddenButton(link5);
+    });
 })
 
-//button 2
-document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('p2');
-
-    link.addEventListener('click', function() {
-
-        data = getData();
-        ans = checkAnswer();
-
-        buttonData = link.innerHTML;
-        if(buttonData === data.correct_answer)
-        {
-            link.style.background='#008000';
-        }
-        else
-        {
-            link.style.background='#FF0000';
-            ans.style.background = '#008000';
-        }
-
-        document.getElementById("newQ").style.visibility = "visible";
-        disableButtons();
-
-    })
-})
-
-//button 3
-document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('p3');
-
-    link.addEventListener('click', function() {
-
-
-        data = getData();
-
-        ans = checkAnswer();
-
-        console.log(ans);
-        buttonData = link.innerHTML;
-        if(buttonData == data.correct_answer)
-        {
-            link.style.background='#008000';
-        }
-        else
-        {
-            link.style.background='#FF0000';
-            ans.style.background = '#008000';
-        }
-        document.getElementById("newQ").style.visibility = "visible";
-        disableButtons();
-
-
-    })
-})
-
-//button 4
-document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('p4');
-
-    link.addEventListener('click', function() {
-        
-        data = getData();
-        ans = checkAnswer();
-        console.log(ans);
-        buttonData = link.innerHTML;
-        if(buttonData === data.correct_answer)
-        {
-            link.style.background='#008000';
-        }
-        else
-        {
-            link.style.background='#FF0000';
-            ans.style.background = '#008000';
-        }
-
-        document.getElementById("newQ").style.visibility = "visible";
-        disableButtons();
-
-    })
-})
 
 //function to check right one and wrong one, loop through and color 
-
-function checkAnswer()
-{
+function checkAnswer() {
     var buttonData = [];
-    buttonData[0] =  document.getElementById('answer1').innerHTML;
-    buttonData[1] =  document.getElementById('p2').innerHTML;
-    buttonData[2] =  document.getElementById('p3').innerHTML;
-    buttonData[3] =  document.getElementById('p4').innerHTML;
+    buttonData[0] = document.getElementById('answer1');
+    buttonData[1] = document.getElementById('p2');
+    buttonData[2] = document.getElementById('p3');
+    buttonData[3] = document.getElementById('p4');
 
-    var buttons = ['answer1', 'p1', 'p2', 'p3'];
+    var buttons = ['answer1', 'p2', 'p3', 'p4'];
     var i;
-    var ans; 
+    var ans;
     var input;
 
-    for(i = 0; i < buttonData.length; i++)
-    {
-        if(buttonData[i] == data.correct_answer)
-        {
+    for (i = 0; i < buttonData.length; i++) {
+        if (buttonData[i].innerHTML === data.correct_answer) {
+            console.log(data.correct_answer);
+            console.log(buttonData[i]);
             input = buttons[i];
         }
     }
 
-    console.log(input);
     ans = document.getElementById(input);
     return ans;
 
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    var link = document.getElementById('newQ');
-    // onClick's logic below:
-    link.addEventListener('click', function () {
-        var buttons = ['answer1', 'p2', 'p3', 'p4'];
+function hiddenButton(link5)
+{
+    var buttons = ['answer1', 'p2', 'p3', 'p4'];
 
-        data = getData();
-        var i;
-        for(i = 0; i < 4; i++)
-        {
-            input = buttons[i];
-            console.log(input);
-            document.getElementById(input).style.background = '#ffffff';
-        }
-        //randomize choices!! TODO 
-        document.getElementById("h1").innerHTML = data.question;
-        document.getElementById("answer1").innerHTML = data.correct_answer;
-        document.getElementById("p2").innerHTML = data.incorrect_answers[0];
-        document.getElementById("p3").innerHTML = data.incorrect_answers[1];
-        document.getElementById("p4").innerHTML = data.incorrect_answers[2];
-        document.getElementById("newQ").style.visibility = "hidden";
-        enableButtons();
-    });
-});
+    data = getData();
+    var i;
+    for (i = 0; i < 4; i++) {
+        input = buttons[i];
+        console.log(input);
+        document.getElementById(input).style.background = '#ffffff';
+    }
 
-// document.getElementById("p1").innerHTML = "New text!";
-
-// let changeColor = document.getElementById('box');
-// chrome.storage.sync.get('color', function(data) {
-//   changeColor.style.backgroundColor = data.color;
-//   changeColor.setAttribute('value', data.color);
-// });
-
-//   changeColor.onclick = function(element) {
-//     let color = element.target.value;
-//     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-//       chrome.tabs.executeScript(
-//           tabs[0].id,
-//           {code: 'document.body.style.backgroundColor = "' + color + '";'});
-//     });
-// };
-// });
+    writeData(data);
+    document.getElementById("newQ").style.visibility = "hidden";
+    enableButtons();
+}
