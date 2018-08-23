@@ -9,8 +9,55 @@ function buildUrl()
     return getBaseUrl() + 'api.php?amount=10&type=multiple';
 }
 
+function getOneQuestion()
+{
+    //make call to API
+    var apiUrl = getBaseUrl() + 'api.php?amount=1&type=multiple';
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', apiUrl, false);
+
+    request.send(null);
+
+    var data = JSON.parse(request.responseText);
+
+    if (request.status >= 200 && request.status < 400)
+    {
+
+        var question = data.results[0];
+        return question;
+        
+    }
+    else
+    {
+        console.log('error');
+    }
+
+    return null;
+
+    // request.onload = function()
+    // {
+    //     var data = JSON.parse(this.response);
+
+    //     if (request.status >= 200 && request.status < 400)
+    //     {
+
+    //         var question = data[results][0];
+    //         callback(question);
+    //     }
+    //     else
+    //     {
+    //         console.log('error');
+    //     }
+    // }
+
+    // request.send();
+}
+
 function getQuestions()
 {
+
     //make call to API
     var apiUrl = buildUrl();
 
