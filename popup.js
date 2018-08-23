@@ -151,9 +151,8 @@ function hiddenButton(link5)
     data = getData();
     var i;
     for (i = 0; i < 4; i++) {
-        input = buttons[i];
-        console.log(input);
-        document.getElementById(input).style.background = '#ffffff';
+        input = buttons[i];        
+        document.getElementById(input).style.background = ' #F5F5F5 ';
     }
 
     writeData(data);
