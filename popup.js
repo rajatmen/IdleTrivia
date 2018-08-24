@@ -1,5 +1,5 @@
 var currentQuestion = getOneQuestion();
-
+    
 onload();
 
 function getBaseUrl()
@@ -14,7 +14,7 @@ function buildUrl()
 
 function getOneQuestion()
 {
-    //make call to API
+
     var apiUrl = getBaseUrl() + 'api.php?amount=1&type=multiple';
 
     var request = new XMLHttpRequest();
@@ -38,24 +38,6 @@ function getOneQuestion()
     }
 
     return null;
-
-    // request.onload = function()
-    // {
-    //     var data = JSON.parse(this.response);
-
-    //     if (request.status >= 200 && request.status < 400)
-    //     {
-
-    //         var question = data[results][0];
-    //         callback(question);
-    //     }
-    //     else
-    //     {
-    //         console.log('error');
-    //     }
-    // }
-
-    // request.send();
 }
 
 function newQuestion()
@@ -63,23 +45,6 @@ function newQuestion()
     currentQuestion = getOneQuestion();
 }
 function getData() {
-    // data = {
-
-    //     "category": "Animals",
-    //     "type": "multiple",
-    //     "difficulty": "easy",
-    //     "question": "The Kākāpō is a large, flightless, nocturnal parrot native to which country?",
-    //     "correct_answer": "New Zealand",
-    //     "incorrect_answers": [
-    //         "South Africa",
-    //         "Australia",
-    //         "Madagascar"
-    //     ]
-
-    // };
-
-
-
     return currentQuestion;
 }
 
@@ -142,12 +107,9 @@ function answerSelection(link) {
 
     buttonData = link.innerHTML;
     if (buttonData === data.correct_answer) {
-        //link.style.background = '#008000';
         link.className = 'btn btn-success btn-space';
     }
     else {
-        //link.style.background = '#FF0000';
-        //ans.style.background = '#008000';
         link.className = 'btn btn-danger btn-space';
         ans.className ='btn btn-success btn-space';
     }
@@ -183,10 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 })
 
-
-//function to check right one and wrong one, loop through and color 
 function checkAnswer(data) {
-
     var buttonData = [];
     buttonData[0] = document.getElementById('answer1');
     buttonData[1] = document.getElementById('p2');
@@ -201,13 +160,9 @@ function checkAnswer(data) {
     console.log(buttons);
     for (i = 0; i < buttonData.length; i++) {
         if (buttonData[i].innerHTML === data.correct_answer) {
-            // console.log(data);
-            // console.log(data.correct_answer);
             input = buttons[i];
         }
     }
-    // console.log('answer below!!');
-    // console.log(input);
     ans = document.getElementById(input);
     console.log(ans);
     return ans;
@@ -220,7 +175,6 @@ function hiddenButton(link5)
     var i;
     for (i = 0; i < 4; i++) {
         input = buttons[i];        
-        //document.getElementById(input).style.background = ' #138496 ';
         document.getElementById(input).className = 'btn btn-info btn-space';
     }
 
